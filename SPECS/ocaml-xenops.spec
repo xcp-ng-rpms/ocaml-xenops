@@ -1,14 +1,17 @@
 %global debug_package %{nil}
 
 Name:           ocaml-xenops
-Version:        2.0.0
-Release:        14%{?dist}
+Version:        2.4.0
+Release:        1%{?dist}
 Summary:        Low-level xen control operations OCaml
 License:        LGPL
 URL:            https://github.com/xapi-project/xenops
-Source0:        https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v%{version}&format=tar.gz&prefix=xenops-%{version}#/xenops-%{version}.tar.gz
-Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.0.0&format=tar.gz&prefix=xenops-2.0.0#/xenops-2.0.0.tar.gz) = ad7cc22a2508ae540201da13f9e9894ed1593025
-BuildRequires:  ocaml-camlp4-devel
+
+Source0: https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz
+
+
+Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz) = ba326d8aad69d6d7841cd09a637f636dd0ee5e83
+
 BuildRequires:  xs-opam-repo
 BuildRequires:  xen-ocaml-devel
 BuildRequires:  ocaml-xcp-idl-devel
@@ -23,6 +26,7 @@ BuildRequires:  xen-dom0-libs-devel
 Low-level xen control operations in OCaml.
 
 %package        devel
+Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz) = ba326d8aad69d6d7841cd09a637f636dd0ee5e83
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
 Requires:       xs-opam-repo
@@ -35,6 +39,7 @@ The %{name}-devel package contains libraries and signature files for
 developing applications that use %{name}.
 
 %package        tools
+Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz) = ba326d8aad69d6d7841cd09a637f636dd0ee5e83
 Summary:        Debugging tools for %{name}
 Requires:       xen-libs
 Requires:       xen-dom0-libs
@@ -42,7 +47,7 @@ Requires:       xen-dom0-libs
 %description   tools
 A set of debugging tools which showcase the features of %{name}-devel.
 
-%global ocaml_dir    /usr/lib/opamroot/system
+%global ocaml_dir    /usr/lib/opamroot/ocaml-system
 %global ocaml_libdir %{ocaml_dir}/lib
 %global ocaml_docdir %{ocaml_dir}/doc
 %global build_ocaml_dir %{buildroot}%{ocaml_dir}
@@ -50,17 +55,13 @@ A set of debugging tools which showcase the features of %{name}-devel.
 %global build_ocaml_docdir %{buildroot}%{ocaml_docdir}
 
 %prep
-%autosetup -p1 -n xenops-%{version}
+%autosetup -p1
 
 %build
 make
 
 %install
-mkdir -p %{buildroot}/%{_bindir}
-mkdir -p %{build_ocaml_libdir}
-mkdir -p %{build_ocaml_docdir}
-make install OPAM_PREFIX=%{build_ocaml_dir} OPAM_LIBDIR=%{build_ocaml_libdir} BINDIR=%{buildroot}%{_bindir}
-
+make DESTDIR=%{buildroot} BINDIR=%{_bindir} install
 
 # this is to make opam happy
 mkdir -p %{build_ocaml_libdir}/xapi-xenops
@@ -91,6 +92,20 @@ mkdir -p %{build_ocaml_libdir}/xapi-xenops
 %{_bindir}/list_domains
 
 %changelog
+* Wed Jan 23 2019 Christian Lindig <christian.lindig@citrix.com> - 2.4.0-1
+- Prepare for Dune 1.6
+- Use Ocaml 4.07 in Travis
+
+* Tue Dec 04 2018 Christian Lindig <christian.lindig@citrix.com> - 2.3.0-1
+- Moved from jbuilder to dune and deprecated xcp in favour of xapi-idl.
+
+* Tue Nov 06 2018 Christian Lindig <christian.lindig@citrix.com> - 2.2.0-1
+- Update opam files for Opam 2, update Travis configuration
+
+* Fri Sep 07 2018 Christian Lindig <christian.lindig@citrix.com> - 2.1.0-1
+- CA-289145: Close socket if error occurs when connecting
+- src/io: make safe-string compliant
+
 * Wed Apr 04 2018 Marcello Seri <marcello.seri@citrix.com> - 2.0.0-6
 - Update SPEC file to get rid of rpmbuild warnings
 
