@@ -1,16 +1,16 @@
 %global debug_package %{nil}
 
 Name:           ocaml-xenops
-Version:        2.4.0
-Release:        1%{?dist}
+Version:        2.6.0
+Release:        2%{?dist}
 Summary:        Low-level xen control operations OCaml
 License:        LGPL
 URL:            https://github.com/xapi-project/xenops
 
-Source0: https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz
+Source0: https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.6.0&format=tar.gz&prefix=ocaml-xenops-2.6.0#/xenops-2.6.0.tar.gz
 
 
-Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz) = ba326d8aad69d6d7841cd09a637f636dd0ee5e83
+Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.6.0&format=tar.gz&prefix=ocaml-xenops-2.6.0#/xenops-2.6.0.tar.gz) = 8ca1e2ac7072e105f4b74f64efbdf4ab504273f1
 
 BuildRequires:  xs-opam-repo
 BuildRequires:  xen-ocaml-devel
@@ -26,7 +26,7 @@ BuildRequires:  xen-dom0-libs-devel
 Low-level xen control operations in OCaml.
 
 %package        devel
-Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz) = ba326d8aad69d6d7841cd09a637f636dd0ee5e83
+Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.6.0&format=tar.gz&prefix=ocaml-xenops-2.6.0#/xenops-2.6.0.tar.gz) = 8ca1e2ac7072e105f4b74f64efbdf4ab504273f1
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
 Requires:       xs-opam-repo
@@ -39,7 +39,7 @@ The %{name}-devel package contains libraries and signature files for
 developing applications that use %{name}.
 
 %package        tools
-Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.4.0&format=tar.gz&prefix=ocaml-xenops-2.4.0#/xenops-2.4.0.tar.gz) = ba326d8aad69d6d7841cd09a637f636dd0ee5e83
+Provides: gitsha(https://code.citrite.net/rest/archive/latest/projects/XSU/repos/xenops/archive?at=v2.6.0&format=tar.gz&prefix=ocaml-xenops-2.6.0#/xenops-2.6.0.tar.gz) = 8ca1e2ac7072e105f4b74f64efbdf4ab504273f1
 Summary:        Debugging tools for %{name}
 Requires:       xen-libs
 Requires:       xen-dom0-libs
@@ -47,7 +47,7 @@ Requires:       xen-dom0-libs
 %description   tools
 A set of debugging tools which showcase the features of %{name}-devel.
 
-%global ocaml_dir    /usr/lib/opamroot/ocaml-system
+%global ocaml_dir    %{_opamroot}/ocaml-system
 %global ocaml_libdir %{ocaml_dir}/lib
 %global ocaml_docdir %{ocaml_dir}/doc
 %global build_ocaml_dir %{buildroot}%{ocaml_dir}
@@ -92,6 +92,17 @@ mkdir -p %{build_ocaml_libdir}/xapi-xenops
 %{_bindir}/list_domains
 
 %changelog
+* Fri Aug 23 2019 Edwin Török <edvin.torok@citrix.com> - 2.6.0-2
+- bump packages after xs-opam update
+
+* Wed Aug 07 2019 Christian Lindig <christian.lindig@citrix.com> - 2.6.0-1
+- CP-30366 Use dune in xenops.opam
+
+* Tue Jun 11 2019 Christian Lindig <christian.lindig@citrix.com> - 2.5.0-1
+- Update Travis configuration
+- Remove obsolete xenstore_watch module
+- Remove obsolete .hg_archival.txt
+
 * Wed Jan 23 2019 Christian Lindig <christian.lindig@citrix.com> - 2.4.0-1
 - Prepare for Dune 1.6
 - Use Ocaml 4.07 in Travis
